@@ -8,7 +8,7 @@ public class Field : MonoBehaviour
     public Vector3 position;
     public SoftwareRenderer renderer;
     public Star star;
-
+    public float speed;
     public List<Star> stars = new List<Star>();
     // Start is called before the first frame update
 
@@ -41,9 +41,7 @@ public class Field : MonoBehaviour
     {
         foreach (Star s in stars)
         {
-            
-            
-            
+            s.myPosition.z = s.myPosition.z + (speed * Time.deltaTime);
         }
     }
     
@@ -52,7 +50,7 @@ public class Field : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //UpdatePosition();
+        UpdatePosition();
         Render();
         
         //Getting an idea of what needs to happen

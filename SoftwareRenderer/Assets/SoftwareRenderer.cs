@@ -81,10 +81,16 @@ public class SoftwareRenderer : MonoBehaviour
         b = blue;
         SpecificUpdate();
     }
+    
+    public float camDistance = 10;
 
     public void Set3DPixel(float x, float y, float z)
     {
         
+        //Need to work in camera here
+        float newPosX = x / (z * camDistance);
+        float newPosY = y / (z * camDistance);
+        //Possibly need another function to update the 
     }
 
     void Wipe()

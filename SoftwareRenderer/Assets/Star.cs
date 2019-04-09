@@ -11,6 +11,9 @@ public class Star
     // Start is called before the first frame update
     public Star(Vector3 position, int r, int g, int b)
     {
-        myPosition = position;
-    }    
+        myPosition.x = position.x;
+        myPosition.y = position.y;
+        myPosition.z = 1;
+    }
+
 }
