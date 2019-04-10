@@ -21,7 +21,7 @@ public class SoftwareRenderer : MonoBehaviour
         _texture2D = new Texture2D(xSize,ySize, TextureFormat.RGB24, false);
         _texture2D.filterMode = FilterMode.Point;
         quadRend.material.mainTexture = _texture2D;
-        
+        backBuffer = new byte[xSize * ySize* 3];
         //Set to red
         //backBuffer[6] = 255;
     }
@@ -90,6 +90,10 @@ public class SoftwareRenderer : MonoBehaviour
         //Need to work in camera here
         float newPosX = x / (z * camDistance);
         float newPosY = y / (z * camDistance);
+
+        float xCentre = xSize / 2;
+        float yCentre = ySize / 2;
+        SetPixel((int)(newPosX + xCentre), (int)(newPosY + yCentre),255,255,255);
         //Possibly need another function to update the 
     }
 
