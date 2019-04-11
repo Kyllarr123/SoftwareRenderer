@@ -9,10 +9,11 @@ public class SoftwareRenderer : MonoBehaviour
     public Renderer quadRend;
 
     public Texture2D _texture2D;
-
-    public int changeX;
-    public int changeY;
-    public int r, g, b;
+    public Field field;
+    private int changeX;
+    private int changeY;
+    private int r, g, b;
+    [HideInInspector]
     public byte[] backBuffer;
     
     // Start is called before the first frame update
@@ -29,7 +30,9 @@ public class SoftwareRenderer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         UpdateEverything();
+        Render();
     }
     [ContextMenu("Update Everything")]
     void UpdateEverything()
@@ -41,7 +44,7 @@ public class SoftwareRenderer : MonoBehaviour
             backBuffer[i] = 0;
             backBuffer[i + 1] = 0;
             backBuffer[i + 2] = 0;
-            UpdateTex();
+            //UpdateTex();
         }
         
     }
@@ -84,7 +87,7 @@ public class SoftwareRenderer : MonoBehaviour
     
     public float camDistance = 10;
 
-    public void Set3DPixel(float x, float y, float z)
+    public void Set3DPixel(float x, float y, float z, int r,int g ,int b)
     {
         
         //Need to work in camera here
@@ -93,7 +96,7 @@ public class SoftwareRenderer : MonoBehaviour
 
         float xCentre = xSize / 2;
         float yCentre = ySize / 2;
-        SetPixel((int)(newPosX + xCentre), (int)(newPosY + yCentre),255,255,255);
+        SetPixel((int)(newPosX + xCentre), (int)(newPosY + yCentre),r,g,b);
         //Possibly need another function to update the 
     }
 
@@ -106,5 +109,25 @@ public class SoftwareRenderer : MonoBehaviour
             backBuffer[((changeY * xSize) + changeX) * 3 + 2] = 0;
             UpdateTex();
         }
+    }
+    public void Render()
+    {
+        foreach (Star s in field.stars)
+        {
+            
+            //renderer.SetPixel((int) s.myPosition.x, (int) s.myPosition.y, s.sR, s.sG, s.sB);
+            //s.myPosition.x = s.myPosition.x + 1;
+            
+            Set3DPixel(s.myPosition.x,s.myPosition.y,s.myPosition.z, s.sR,s.sG,s.sB);
+        }
+
+        foreach (Mesh m in field.meshs)
+        {
+            foreach (Vertex v in m.Vertices)
+            {
+                Set3DPixel(m.position.x + v.position.x,m.position.y + v.position.y,m.position.z + v.position.z, v.sR,v.sG,v.sB);
+            }
+        }
+        
     }
 }
